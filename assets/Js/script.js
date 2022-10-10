@@ -1,18 +1,60 @@
+// navbar active effect start
 var item_menu = document.querySelector(".menu .item-menu")
 var item_list = document.querySelectorAll(".menu .item-menu li")
 
 item_list.forEach(function(list){
     list.addEventListener("click",function(){
-    //    ul.classList.toggle("open")
-    //    overlay.classList.toggle("active");
+       menu.classList.toggle("active")
+       overlay.classList.toggle("active");
        item_list.forEach(function(list){
         list.classList.remove("active")
        })
        list.classList.add("active")
     })
  })
+// navbar active effect end
 
- const $window = $(window);
+// hamburger menu start
+var hamburger = document.querySelector(".hamburger")
+var close = document.querySelector(".close")
+var menu = document.querySelector(".menu")
+var overlay = document.querySelector("header .menu-overlay")
+hamburger.addEventListener("click",function(){
+  menu.classList.toggle("active")
+  overlay.classList.toggle("active");
+})
+close.addEventListener("click",function(){
+  menu.classList.toggle("active")
+  overlay.classList.toggle("active");
+})
+overlay.addEventListener("click", function(){
+  overlay.classList.toggle("active");
+  menu.classList.toggle("active")
+});
+// hamburger menu end
+
+
+ // header scrol shadow start
+window.addEventListener('scroll', function(){
+  const header = document.getElementById('header')
+  const mini_header = document.getElementById('mini-header')
+  
+  if(this.scrollY >= 600) {
+    header.classList.add('scroll-header'); 
+    mini_header.classList.add('scroll-header-none'); 
+    header.classList.add("header-scrolled");
+
+  }
+  else {
+    header.classList.remove('scroll-header')
+    mini_header.classList.remove('scroll-header-none'); 
+    header.classList.remove("header-scrolled");
+  }
+})
+// header scrol shadow end
+
+//slider start
+const $window = $(window);
 const $body = $('body');
 
 class Slideshow {
@@ -172,3 +214,110 @@ class Slideshow {
 
   addLoadClass();
 })();
+
+var x, i, j, l, ll, selElmnt, a, b, c;
+/*look for any elements with the class "custom-select":*/
+x = document.getElementsByClassName("custom-select");
+l = x.length;
+for (i = 0; i < l; i++) {
+  selElmnt = x[i].getElementsByTagName("select")[0];
+  ll = selElmnt.length;
+  /*for each element, create a new DIV that will act as the selected item:*/
+  a = document.createElement("DIV");
+  a.setAttribute("class", "select-selected");
+  a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
+  x[i].appendChild(a);
+  /*for each element, create a new DIV that will contain the option list:*/
+  b = document.createElement("DIV");
+  b.setAttribute("class", "select-items select-hide");
+  for (j = 1; j < ll; j++) {
+    /*for each option in the original select element,
+    create a new DIV that will act as an option item:*/
+    c = document.createElement("DIV");
+    c.innerHTML = selElmnt.options[j].innerHTML;
+    c.addEventListener("click", function(e) {
+        /*when an item is clicked, update the original select box,
+        and the selected item:*/
+        var y, i, k, s, h, sl, yl;
+        s = this.parentNode.parentNode.getElementsByTagName("select")[0];
+        sl = s.length;
+        h = this.parentNode.previousSibling;
+        for (i = 0; i < sl; i++) {
+          if (s.options[i].innerHTML == this.innerHTML) {
+            s.selectedIndex = i;
+            h.innerHTML = this.innerHTML;
+            y = this.parentNode.getElementsByClassName("same-as-selected");
+            yl = y.length;
+            for (k = 0; k < yl; k++) {
+              y[k].removeAttribute("class");
+            }
+            this.setAttribute("class", "same-as-selected");
+            break;
+          }
+        }
+        h.click();
+    });
+    b.appendChild(c);
+  }
+  x[i].appendChild(b);
+  a.addEventListener("click", function(e) {
+      /*when the select box is clicked, close any other select boxes,
+      and open/close the current select box:*/
+      e.stopPropagation();
+      closeAllSelect(this);
+      this.nextSibling.classList.toggle("select-hide");
+      this.classList.toggle("select-arrow-active");
+    });
+}
+function closeAllSelect(elmnt) {
+  /*a function that will close all select boxes in the document,
+  except the current select box:*/
+  var x, y, i, xl, yl, arrNo = [];
+  x = document.getElementsByClassName("select-items");
+  y = document.getElementsByClassName("select-selected");
+  xl = x.length;
+  yl = y.length;
+  for (i = 0; i < yl; i++) {
+    if (elmnt == y[i]) {
+      arrNo.push(i)
+    } else {
+      y[i].classList.remove("select-arrow-active");
+    }
+  }
+  for (i = 0; i < xl; i++) {
+    if (arrNo.indexOf(i)) {
+      x[i].classList.add("select-hide");
+    }
+  }
+}
+/*if the user clicks anywhere outside the select box,
+then close all select boxes:*/
+document.addEventListener("click", closeAllSelect);
+
+//slider end
+
+
+
+// scroll to top start
+let calcScrollValue = () => {
+  let scrollProgress = document.getElementById("progress");
+  let progressValue = document.getElementById("progress-value");
+  let pos = document.documentElement.scrollTop;
+  let calcHeight =
+    document.documentElement.scrollHeight -
+    document.documentElement.clientHeight;
+  let scrollValue = Math.round((pos * 100) / calcHeight);
+  if (pos > 100) {
+    scrollProgress.style.display = "grid";
+  } else {
+    scrollProgress.style.display = "none";
+  }
+  scrollProgress.addEventListener("click", () => {
+    document.documentElement.scrollTop = 0;
+  });
+  scrollProgress.style.background = `conic-gradient(#03cc65 ${scrollValue}%, #d7d7d7 ${scrollValue}%)`;
+};
+
+window.onscroll = calcScrollValue;
+window.onload = calcScrollValue;
+// scroll to top end
