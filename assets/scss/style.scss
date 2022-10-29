@@ -57,7 +57,18 @@ section{
 }
 // format css end
 
-
+.menu-overlay{
+  position: fixed;
+  z-index: 999;
+  background-color: rgba(0,0,0,0.5);
+  left:0;
+  top:0;
+  height: 100%;
+  width: 100%;
+  visibility: hidden;
+  opacity:0;
+  transition: all 0.3s ease;
+}
 // header start
 header{
     width: 100%;
@@ -65,20 +76,11 @@ header{
     left: 0;
     right: 0;
     top: 0;
-    z-index: 10;
-    .menu-overlay{
-      position: fixed;
-      z-index: 999;
-      background-color: rgba(0,0,0,0.5);
-      left:0;
-      top:0;
-      height: 100%;
-      width: 100%;
-      visibility: hidden;
-      opacity:0;
-      transition: all 0.3s ease;
-    }
-
+    z-index: 100000000000000 !important;
+    background: rgba(0, 0, 0, 0.485);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.441);
+    backdrop-filter: blur(5px);
+   -webkit-backdrop-filter: blur(5px);
     nav{
         display: flex;
         justify-content: space-between;
@@ -106,6 +108,7 @@ header{
             li{
                 padding: 20px 0;
                 position: relative;
+                cursor: pointer;
                 &:hover{
                     background-color: rgba(0, 0, 0, 0.102);
                 }
@@ -158,25 +161,7 @@ header{
                 display: flex;
                 align-items: center;
                 gap: 1.5rem;
-                .favorite{
-                     display: flex;
-                     align-items: center;
-                     gap: 0.5rem;
-                     padding: 0.67rem 1.5rem !important;
-                     font-family: 'Arial', serif;
-			         font-size: 12px;
-		        	 color: #000000;
-			         text-transform: uppercase;
-			         letter-spacing: 3px;
-                     &:hover {
-                        color: #f12020;
-                        transition: all 400ms;
-                    }
-                     i{
-                        font-size: 20px;
-                     }
-                }
-                .button{
+                button{
                     background-color: #f5efe653;
                     padding: 0.8rem 1.5rem;
                     border: 0;
@@ -184,7 +169,6 @@ header{
                     font-family: 'Raleway', sans-serif;
                     transition: .6s;
                     overflow: hidden;
-                    position: relative;
                     font-weight: 600;
                     backdrop-filter: blur(5px);
                    -webkit-backdrop-filter: blur(5px);
@@ -192,8 +176,30 @@ header{
                     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
                     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
                     cursor: pointer;
-                    &:hover a{
-                        color: #276cb0;
+                    position: relative;
+                    &:hover .favorite{
+                      color: #f12020;
+                    }
+                    &:hover .qeydiyyat{
+                      color: #276cb0;
+                    }
+                    &:focus {
+                      outline: none;
+                    }
+                    .circle {
+                      position: absolute;
+                      background-color: #fff;
+                      width: 100px;
+                      height: 100px;
+                      border-radius: 50%;
+                      transform: translate(-50%, -50%) scale(0);
+                      animation: scale 0.5s ease-out;
+                    }
+                    @keyframes scale {
+                      to {
+                        transform: translate(-50%, -50%) scale(3);
+                        opacity: 0;
+                      }
                     }
                     a{
                         display: flex;
@@ -201,10 +207,10 @@ header{
                         justify-content: center;
                         gap: 0.5rem;
                         font-family: 'Arial', serif;
-			            font-size: 12px;
-			             color: #000000;
-			           text-transform: uppercase;
-			           letter-spacing: 3px;
+			                  text-transform: uppercase;
+                        font-size: 12px;
+                        color: #000000;
+                        letter-spacing: 3px;
                      i{
                       font-size: 20px;
                      }
@@ -291,7 +297,6 @@ header{
 // home banner slider
 .slider-section{
   position: relative;
-  
 }
 .pagination {
   position: absolute !important;
@@ -1736,56 +1741,205 @@ body[data-route-option=prev-section] .c-header-home_controls, body[data-route-op
     width: 15.625rem;
   }
 }
-@media screen and (max-width: 320px){ 
-}
 // home banner slider end
 
 
+// home filter start
+.filter{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 0;
+  top: 60%;
+  width: 100%;   
+.home-filters{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2rem;
+  padding: 2.3rem  5rem;
+  background: rgba(0, 0, 0, 0.485);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.441);
+  backdrop-filter: blur(5px);
+ -webkit-backdrop-filter: blur(5px);
+}
+}
+.custom-select {
+position: relative;
+font-family: Arial;
+border: none;
+}
+.custom-select select {
+display: none; /*hide original SELECT element:*/
+}
+.select-selected {
+background: rgba(255, 255, 255, 0.2);
+border-radius: 0px !important;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(5px);
+-webkit-backdrop-filter: blur(5px);
+border: 1px solid rgba(255, 255, 255, 0.3);
+color: white !important;
+border: none !important;
+padding:14px 16px !important;
+
+}
+/*style the arrow inside the select element:*/
+.select-selected:after {
+position: absolute;
+content: "";
+top: 20px;
+right: 10px;
+width: 0;
+height: 0;
+border: 6px solid transparent;
+border-color: rgb(255, 255, 255) transparent transparent transparent;
+}
+/*point the arrow upwards when the select box is open (active):*/
+.select-selected.select-arrow-active:after {
+border-color: transparent transparent rgb(255, 255, 255) transparent;
+top: 7px;
+}
+/*style the items (options), including the selected item:*/
+.select-selected {
+color: rgb(255, 255, 255);
+padding: 12px 16px;
+border: 1px solid transparent;
+border-color: white;
+cursor: pointer;
+user-select: none;
+border-radius: 4px;
+
+}
+.select-items div {
+color: rgb(255, 255, 255);
+padding: 8px 16px;
+border: solid transparent;
+border-width: 0 1px 0 1px;
+border-color: white;
+cursor: pointer;
+user-select: none;
+}
+.select-items div:first-child {
+color: rgb(255, 255, 255);
+padding: 8px 16px;
+border: solid transparent;
+border-width: 1px 1px 0 1px;
+border-color: white;
+cursor: pointer;
+user-select: none;
+border-radius: 4px 4px 0 0;
+}
+.select-items div:last-child {
+color: rgb(255, 255, 255);
+padding: 8px 16px;
+border: solid transparent;
+border-width: 0 1px 1px 1px;
+border-color: white;
+cursor: pointer;
+user-select: none;
+border-radius: 0 0 4px 4px;
+}
+/*style items (options):*/
+.select-items {
+position: absolute;
+top: 100%;
+left: 0;
+right: 0;
+z-index: 99;
+background: rgba(72, 72, 72, 0.763);
+border-radius: 8px !important;
+box-shadow: 0 4px 30px rgba(95, 95, 95, 0.786);
+backdrop-filter: blur(10px);
+-webkit-backdrop-filter: blur(10px);
+border: 1px solid rgba(255, 255, 255, 0.3);
+color: rgb(172, 172, 172) !important;
+border: none !important;
+
+}
+
+/*hide the items when the select box is closed:*/
+.select-hide {
+display: none;
+}
+
+.select-items div:hover, .same-as-selected {
+background-color: rgba(0, 0, 0, 0.1);
+}
+
+.input-unvan,.min-input,.max-input{
+input{
+  width: 100%;
+  outline: none;
+  padding:14px 16px;
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: none;
+  color: white;
+  height: 100%;
+&::placeholder{
+  color: white ;
+}
+}
+}
+
+.button-filter{
+
+input{
+  border-radius: 4px;
+  background-color: #f5efe653;
+  padding:14px 26px;
+  border-radius: 4px;
+  font-family: 'Raleway', sans-serif;
+  transition: .6s;
+  overflow: hidden;
+  position: relative;
+  font-weight: 600;
+  backdrop-filter: blur(5px);
+ -webkit-backdrop-filter: blur(5px);
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  border: none;
+}
+}
+// home filter end
+
+
 /* For medium devices */
-@media screen and (max-width: 576px){
-  
-}
-
-@media screen and (max-width: 700px){
-  main{
-    .filter{
-      .home-filters{
-        grid-template-columns: 1fr 1fr !important;
-      }
-    }
-  }
-}
-
-@media screen and (max-width: 1100px){
-  // slider kodlari
+@media screen and (max-width: 1200px){
+  // slider kodlari start
   .c-header-home_footer {
     display: none;
   }
   .pagination{
     display: none;
   }
-    // slider codlari
-    .mini-header{
-        display: none;
-    }
+   // slider codlari end
 
+   // menu overlay start
+   .menu-overlay{
+    &.active{
+      visibility: visible ;
+      opacity: 1 ;
+    }
+   }
+   // menu overlay end
     header{
         top: 0;
         color: white;
-        .menu-overlay{
-          z-index: 0;
-          &.active{
-            visibility: visible;
-            opacity: 1;
-
-          }
-      }
+        .mini-header{
+          display: none;
+        }
        nav{
         border-top: none;
         padding: 0 1rem;
            .menu{
             position: absolute;
-            right: -400px;
+            right: -100%;
             top: 0;
             width: 400px;
             height: 100vh;
@@ -1829,185 +1983,82 @@ body[data-route-option=prev-section] .c-header-home_controls, body[data-route-op
            }
        }
     }
-   
+    .categories{
+      .home-categories{
+        .home-circules{
+          gap: 4rem ;
+          .box{
+            width: 170px !important ;
+            height: 170px !important;
+          }
+        }
+      }
+    }
 }
 
-// home filter start
-.filter{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    bottom: 0;
-    top: 60%;
-    right: 0;
-    width: 100%;
-    
-   
-       
-  .home-filters{
-    display: grid;
-    grid-template-columns: auto auto auto ;
-    gap: 2rem;
-    padding: 2.3rem  5rem;
-    background: rgba(0, 0, 0, 0.485);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.441);
-    backdrop-filter: blur(5px);
-   -webkit-backdrop-filter: blur(5px);
+@media screen and (max-width: 800px){
+  main{
+    .filter{
+      padding: 0 !important;
+      align-items: flex-end !important;
+      width: 100% ;
+      .home-filters{
+        width: 100% ;
+        padding: 40px ;
+        gap: 2rem ;
+        grid-template-columns: 1fr 1fr !important;
+      }
+    }
   }
-}
-.custom-select {
-  position: relative;
-  font-family: Arial;
-  width:200px;
-  border: none;
-}
-.custom-select select {
-  display: none; /*hide original SELECT element:*/
-}
-.select-selected {
-  background: rgba(255, 255, 255, 0.2);
-border-radius: 0px !important;
-box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-backdrop-filter: blur(5px);
--webkit-backdrop-filter: blur(5px);
-border: 1px solid rgba(255, 255, 255, 0.3);
-color: white !important;
-border: none !important;
-padding:14px 16px !important;
-
-}
-/*style the arrow inside the select element:*/
-.select-selected:after {
-  position: absolute;
-  content: "";
-  top: 20px;
-  right: 10px;
-  width: 0;
-  height: 0;
-  border: 6px solid transparent;
-  border-color: rgb(255, 255, 255) transparent transparent transparent;
-}
-/*point the arrow upwards when the select box is open (active):*/
-.select-selected.select-arrow-active:after {
-  border-color: transparent transparent rgb(255, 255, 255) transparent;
-  top: 7px;
-}
-/*style the items (options), including the selected item:*/
-.select-selected {
-  color: rgb(255, 255, 255);
-  padding: 12px 16px;
-  border: 1px solid transparent;
-  border-color: white;
-  cursor: pointer;
-  user-select: none;
-  border-radius: 4px;
-  
-}
-.select-items div {
-  color: rgb(255, 255, 255);
-  padding: 8px 16px;
-  border: solid transparent;
-  border-width: 0 1px 0 1px;
-  border-color: white;
-  cursor: pointer;
-  user-select: none;
-}
-.select-items div:first-child {
-  color: rgb(255, 255, 255);
-  padding: 8px 16px;
-  border: solid transparent;
-  border-width: 1px 1px 0 1px;
-  border-color: white;
-  cursor: pointer;
-  user-select: none;
-  border-radius: 4px 4px 0 0;
-}
-.select-items div:last-child {
-  color: rgb(255, 255, 255);
-  padding: 8px 16px;
-  border: solid transparent;
-  border-width: 0 1px 1px 1px;
-  border-color: white;
-  cursor: pointer;
-  user-select: none;
-  border-radius: 0 0 4px 4px;
-}
-/*style items (options):*/
-.select-items {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  z-index: 99;
-  background: rgba(72, 72, 72, 0.763);
-  border-radius: 8px !important;
-  box-shadow: 0 4px 30px rgba(95, 95, 95, 0.786);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: rgb(172, 172, 172) !important;
-  border: none !important;
-
-}
-
-/*hide the items when the select box is closed:*/
-.select-hide {
-  display: none;
-}
-
-.select-items div:hover, .same-as-selected {
-  background-color: rgba(0, 0, 0, 0.1);
-}
-
-.input-unvan,.min-input,.max-input{
-  width: 200px;
- 
-  input{
-    width: 100%;
-    outline: none;
-    padding:14px 16px;
-    background: rgba(255, 255, 255, 0.2);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    border: none;
-    color: white;
-    height: 100%;
-  &::placeholder{
-    color: white ;
-  }
+  .categories{
+    .home-categories{
+      .home-circules{
+        gap:3rem !important;
+        .box{
+          width: 150px !important;
+          height: 150px !important;
+        }
+      }
+    }
   }
 }
 
-.button-filter{
- 
-  input{
-    border-radius: 4px;
-    background-color: #f5efe653;
-    padding:14px 26px;
-    border-radius: 4px;
-    font-family: 'Raleway', sans-serif;
-    transition: .6s;
-    overflow: hidden;
-    position: relative;
-    font-weight: 600;
-    backdrop-filter: blur(5px);
-   -webkit-backdrop-filter: blur(5px);
-    border-top: 1px solid rgba(255, 255, 255, 0.3);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    border: none;
+@media screen and (max-width: 576px){
+  header{
+    nav{
+      .menu{
+        width: 100% !important;
+        
+      }
+    }
+  }
+  .filter{
+    padding: 0 !important;
+    align-items: flex-end !important;
+    .home-filters{
+      padding: 20px !important;
+      gap: 1rem !important;
+    }
+  }
+  .categories{
+    .home-categories{
+      .home-circules{
+        padding: 20px;
+        gap: 2rem !important;
+        .box{
+          width: 100px !important;
+          height: 100px !important;
+        }
+      }
+    }
   }
 }
+
 // scroll header start
 .scroll-header{
   background-color: rgb(0, 0, 0);
   color: white;
 }
-
-
 header.header-scrolled {
   -webkit-animation: 500ms ease-in-out 0s normal none 1 running fadeInDown;
   animation: 500ms ease-in-out 0s normal none 1 running fadeInDown;
@@ -2219,3 +2270,30 @@ footer{
   }
 }
 // footer end
+
+.categories{
+  border: 3px solid red;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .home-categories{
+    border: 3px solid rgb(179, 7, 236);
+    .home-circules{
+      border: 3px solid rgb(3, 255, 142);
+      display:grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 6rem;
+      .box{
+        border: 3px solid rgb(27, 0, 84);
+        background-color: #00acee;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+      }
+    }
+  }
+}

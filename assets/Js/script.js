@@ -18,7 +18,7 @@ item_list.forEach(function(list){
 var hamburger = document.querySelector(".hamburger")
 var close = document.querySelector(".close")
 var menu = document.querySelector(".menu")
-var overlay = document.querySelector("header .menu-overlay")
+var overlay = document.querySelector(".menu-overlay")
 hamburger.addEventListener("click",function(){
   menu.classList.toggle("active")
   overlay.classList.toggle("active");
@@ -315,9 +315,34 @@ let calcScrollValue = () => {
   scrollProgress.addEventListener("click", () => {
     document.documentElement.scrollTop = 0;
   });
-  scrollProgress.style.background = `conic-gradient(#03cc65 ${scrollValue}%, #d7d7d7 ${scrollValue}%)`;
+  scrollProgress.style.background = `conic-gradient(#f12020 ${scrollValue}%, #d7d7d7 ${scrollValue}%)`;
 };
 
 window.onscroll = calcScrollValue;
 window.onload = calcScrollValue;
 // scroll to top end
+
+
+const buttons = document.querySelectorAll('.register .register-buttons button')
+
+buttons.forEach(button => {
+    button.addEventListener('click', function (e) {
+        const x = e.clientX
+        const y = e.clientY
+
+        const buttonTop = e.target.offsetTop
+        const buttonLeft = e.target.offsetLeft
+
+        const xInside = x - buttonLeft
+        const yInside = y - buttonTop
+
+        const circle = document.createElement('span')
+        circle.classList.add('circle')
+        circle.style.top = yInside + 'px'
+        circle.style.left = xInside + 'px'
+
+        this.appendChild(circle)
+
+        setTimeout(() => circle.remove(), 500)
+    })
+})

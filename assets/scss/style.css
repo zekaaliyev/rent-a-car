@@ -59,15 +59,7 @@ section {
   padding: 2rem;
 }
 
-header {
-  width: 100%;
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
-  z-index: 10;
-}
-header .menu-overlay {
+.menu-overlay {
   position: fixed;
   z-index: 999;
   background-color: rgba(0, 0, 0, 0.5);
@@ -78,6 +70,19 @@ header .menu-overlay {
   visibility: hidden;
   opacity: 0;
   transition: all 0.3s ease;
+}
+
+header {
+  width: 100%;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 100000000000000 !important;
+  background: rgba(0, 0, 0, 0.485);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.441);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
 }
 header nav {
   display: flex;
@@ -107,6 +112,7 @@ header nav .menu ul {
 header nav .menu ul li {
   padding: 20px 0;
   position: relative;
+  cursor: pointer;
 }
 header nav .menu ul li:hover {
   background-color: rgba(0, 0, 0, 0.102);
@@ -155,25 +161,7 @@ header nav .register .register-buttons {
   align-items: center;
   gap: 1.5rem;
 }
-header nav .register .register-buttons .favorite {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.67rem 1.5rem !important;
-  font-family: "Arial", serif;
-  font-size: 12px;
-  color: #000000;
-  text-transform: uppercase;
-  letter-spacing: 3px;
-}
-header nav .register .register-buttons .favorite:hover {
-  color: #f12020;
-  transition: all 400ms;
-}
-header nav .register .register-buttons .favorite i {
-  font-size: 20px;
-}
-header nav .register .register-buttons .button {
+header nav .register .register-buttons button {
   background-color: rgba(245, 239, 230, 0.3254901961);
   padding: 0.8rem 1.5rem;
   border: 0;
@@ -181,7 +169,6 @@ header nav .register .register-buttons .button {
   font-family: "Raleway", sans-serif;
   transition: 0.6s;
   overflow: hidden;
-  position: relative;
   font-weight: 600;
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
@@ -189,25 +176,54 @@ header nav .register .register-buttons .button {
   border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   cursor: pointer;
+  position: relative;
 }
-header nav .register .register-buttons .button:hover a {
+header nav .register .register-buttons button:hover .favorite {
+  color: #f12020;
+}
+header nav .register .register-buttons button:hover .qeydiyyat {
   color: #276cb0;
 }
-header nav .register .register-buttons .button a {
+header nav .register .register-buttons button:focus {
+  outline: none;
+}
+header nav .register .register-buttons button .circle {
+  position: absolute;
+  background-color: #fff;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  -webkit-animation: scale 0.5s ease-out;
+          animation: scale 0.5s ease-out;
+}
+@-webkit-keyframes scale {
+  to {
+    transform: translate(-50%, -50%) scale(3);
+    opacity: 0;
+  }
+}
+@keyframes scale {
+  to {
+    transform: translate(-50%, -50%) scale(3);
+    opacity: 0;
+  }
+}
+header nav .register .register-buttons button a {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
   font-family: "Arial", serif;
+  text-transform: uppercase;
   font-size: 12px;
   color: #000000;
-  text-transform: uppercase;
   letter-spacing: 3px;
 }
-header nav .register .register-buttons .button a i {
+header nav .register .register-buttons button a i {
   font-size: 20px;
 }
-header nav .register .register-buttons .button:focus {
+header nav .register .register-buttons button:focus {
   outline: 0;
 }
 header .mini-header nav {
@@ -1921,82 +1937,6 @@ body[data-route-option=prev-section] .c-header-home_controls, body[data-route-op
     width: 15.625rem;
   }
 }
-/* For medium devices */
-@media screen and (max-width: 700px) {
-  main .filter .home-filters {
-    grid-template-columns: 1fr 1fr !important;
-  }
-}
-@media screen and (max-width: 1100px) {
-  .c-header-home_footer {
-    display: none;
-  }
-  .pagination {
-    display: none;
-  }
-  .mini-header {
-    display: none;
-  }
-  header {
-    top: 0;
-    color: white;
-  }
-  header .menu-overlay {
-    z-index: 0;
-  }
-  header .menu-overlay.active {
-    visibility: visible;
-    opacity: 1;
-  }
-  header nav {
-    border-top: none;
-    padding: 0 1rem;
-  }
-  header nav .menu {
-    position: absolute;
-    right: -400px;
-    top: 0;
-    width: 400px;
-    height: 100vh;
-    border: 1px solid gray;
-    align-items: center;
-    justify-content: center;
-    display: flex;
-    background-color: #2f2f2f;
-    transition: 1s;
-    z-index: 1000 !important;
-  }
-  header nav .menu.active {
-    right: 0px;
-  }
-  header nav .menu .close {
-    font-size: 30px;
-    background-color: rgba(0, 0, 0, 0.102);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.5rem;
-    position: absolute;
-    right: 0.5rem;
-    top: 0.5rem;
-    cursor: pointer;
-    color: white;
-  }
-  header nav .menu ul {
-    width: 100%;
-    flex-direction: column;
-    text-align: center;
-    padding: 0 3rem;
-  }
-  header nav .hamburger {
-    display: block;
-    font-size: 30px;
-    cursor: pointer;
-  }
-  header nav .register {
-    display: none;
-  }
-}
 .filter {
   display: flex;
   align-items: center;
@@ -2004,12 +1944,11 @@ body[data-route-option=prev-section] .c-header-home_controls, body[data-route-op
   position: absolute;
   bottom: 0;
   top: 60%;
-  right: 0;
   width: 100%;
 }
 .filter .home-filters {
   display: grid;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 2rem;
   padding: 2.3rem 5rem;
   background: rgba(0, 0, 0, 0.485);
@@ -2021,7 +1960,6 @@ body[data-route-option=prev-section] .c-header-home_controls, body[data-route-op
 .custom-select {
   position: relative;
   font-family: Arial;
-  width: 200px;
   border: none;
 }
 
@@ -2140,9 +2078,6 @@ body[data-route-option=prev-section] .c-header-home_controls, body[data-route-op
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-.input-unvan, .min-input, .max-input {
-  width: 200px;
-}
 .input-unvan input, .min-input input, .max-input input {
   width: 100%;
   outline: none;
@@ -2184,6 +2119,122 @@ body[data-route-option=prev-section] .c-header-home_controls, body[data-route-op
   border: none;
 }
 
+/* For medium devices */
+@media screen and (max-width: 1200px) {
+  .c-header-home_footer {
+    display: none;
+  }
+  .pagination {
+    display: none;
+  }
+  .menu-overlay.active {
+    visibility: visible;
+    opacity: 1;
+  }
+  header {
+    top: 0;
+    color: white;
+  }
+  header .mini-header {
+    display: none;
+  }
+  header nav {
+    border-top: none;
+    padding: 0 1rem;
+  }
+  header nav .menu {
+    position: absolute;
+    right: -100%;
+    top: 0;
+    width: 400px;
+    height: 100vh;
+    border: 1px solid gray;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    background-color: #2f2f2f;
+    transition: 1s;
+    z-index: 1000 !important;
+  }
+  header nav .menu.active {
+    right: 0px;
+  }
+  header nav .menu .close {
+    font-size: 30px;
+    background-color: rgba(0, 0, 0, 0.102);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    position: absolute;
+    right: 0.5rem;
+    top: 0.5rem;
+    cursor: pointer;
+    color: white;
+  }
+  header nav .menu ul {
+    width: 100%;
+    flex-direction: column;
+    text-align: center;
+    padding: 0 3rem;
+  }
+  header nav .hamburger {
+    display: block;
+    font-size: 30px;
+    cursor: pointer;
+  }
+  header nav .register {
+    display: none;
+  }
+  .categories .home-categories .home-circules {
+    gap: 4rem;
+  }
+  .categories .home-categories .home-circules .box {
+    width: 170px !important;
+    height: 170px !important;
+  }
+}
+@media screen and (max-width: 800px) {
+  main .filter {
+    padding: 0 !important;
+    align-items: flex-end !important;
+    width: 100%;
+  }
+  main .filter .home-filters {
+    width: 100%;
+    padding: 40px;
+    gap: 2rem;
+    grid-template-columns: 1fr 1fr !important;
+  }
+  .categories .home-categories .home-circules {
+    gap: 3rem !important;
+  }
+  .categories .home-categories .home-circules .box {
+    width: 150px !important;
+    height: 150px !important;
+  }
+}
+@media screen and (max-width: 576px) {
+  header nav .menu {
+    width: 100% !important;
+  }
+  .filter {
+    padding: 0 !important;
+    align-items: flex-end !important;
+  }
+  .filter .home-filters {
+    padding: 20px !important;
+    gap: 1rem !important;
+  }
+  .categories .home-categories .home-circules {
+    padding: 20px;
+    gap: 2rem !important;
+  }
+  .categories .home-categories .home-circules .box {
+    width: 100px !important;
+    height: 100px !important;
+  }
+}
 .scroll-header {
   background-color: rgb(0, 0, 0);
   color: white;
@@ -2431,4 +2482,30 @@ footer {
   .main-content .box {
     margin: 5px 0;
   }
+}
+.categories {
+  border: 3px solid red;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.categories .home-categories {
+  border: 3px solid rgb(179, 7, 236);
+}
+.categories .home-categories .home-circules {
+  border: 3px solid rgb(3, 255, 142);
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 6rem;
+}
+.categories .home-categories .home-circules .box {
+  border: 3px solid rgb(27, 0, 84);
+  background-color: #00acee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
 }/*# sourceMappingURL=style.css.map */
